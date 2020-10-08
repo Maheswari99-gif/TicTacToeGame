@@ -31,8 +31,8 @@ public class TicTacToeGame {
 		System.out.println("----------");
 		System.out.println("|" + board[6] + "|" + board[7] + "|" + board[8] + "|");
 	}
-	// usecase5//
 
+	// usecase5//
 	public static void checkMove(char[] board, int index, char userinput) {
 
 		board[index] = userinput;
@@ -58,7 +58,7 @@ public class TicTacToeGame {
 	}
 
 	// usecase6//
-	public static String switchCase() { 
+	public static String switchCase() {
 		String userTurn = " ";
 		int user = (int) Math.floor(Math.random() * 10) % 2;
 		System.out.println("User turn");
@@ -67,6 +67,30 @@ public class TicTacToeGame {
 		else
 			userTurn = Computer;
 		return userTurn;
+	}
+
+	// usecase7//
+	public static String isWinning(char[] board, char userinput) {
+		int count = 0;
+		for (int i = 1; i <= 9; i++)
+			if (board[i] == ' ')
+				count++;
+		if (count == 0) {
+			return "tie";
+		} else if ((board[0] == userinput && board[1] == userinput && board[2] == userinput)
+				|| (board[3] == userinput && board[4] == userinput && board[5] == userinput)
+				|| (board[6] == userinput && board[7] == userinput && board[8] == userinput)
+				|| (board[0] == userinput && board[3] == userinput && board[6] == userinput)
+				|| (board[1] == userinput && board[4] == userinput && board[7] == userinput)
+				|| (board[2] == userinput && board[5] == userinput && board[8] == userinput)
+				|| (board[0] == userinput && board[4] == userinput && board[8] == userinput)
+				|| (board[2] == userinput && board[4] == userinput && board[7] == userinput)) {
+
+			return "Win";
+		} else {
+			return "change";
+		}
+
 	}
 
 	public static void main(String[] args) {
