@@ -29,23 +29,24 @@ public class TicTacToeGame {
 		System.out.println("----------");
 		System.out.println("|" + board[6] + "|" + board[7] + "|" + board[8] + "|");
 	}
-	//public static void checkMove(char[] board,int index,char userinput) {
-		//if(board[index]==' ') {
-			//board[index]=userinput;
-			//showBoard(board);
-		//}
-		//else
-			//System.out.println("Not Empty");
-	//}
-	public static boolean chooseLocation(char[] board,int index,char userinput) {
+
+	// public static void checkMove(char[] board,int index,char userinput) {
+	// if(board[index]==' ') {
+	// board[index]=userinput;
+	// showBoard(board);
+	// }
+	// else
+	// System.out.println("Not Empty");
+	// }
+	// usecase4//
+	public static boolean isLocationAvailable(char[] board, int index, char userinput) {
 		boolean emptyStatus;
-		if(board[index]==' ') {
-			emptyStatus= true;
-		System.out.println("Index is available");
-		}
-		else {
-			emptyStatus= false;
-		System.out.println("Index is not available");
+		if (board[index] == ' ') {
+			emptyStatus = true;
+			System.out.println("Index is available");
+		} else {
+			emptyStatus = false;
+			System.out.println("Index is not available");
 		}
 		return emptyStatus;
 	}
@@ -62,9 +63,11 @@ public class TicTacToeGame {
 		createBoard();
 		showBoard(board);
 		boolean emptyStatus;
+		do {
 			System.out.println("Enter the index from 1 to 9");
 			int index = sc.nextInt();
-			emptyStatus = chooseLocation(board,index, userinput);
+			emptyStatus = isLocationAvailable(board, index, userinput);
+		}while (emptyStatus==false);
 	}
 
 	private static void showBoard(Object board) {
