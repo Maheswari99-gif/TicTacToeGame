@@ -4,7 +4,7 @@ package com.capgemini.tictac;
 import java.util.Scanner;
 
 public class TicTacToeGame {
-	
+
 	public static char[] createBoard() {
 		char[] board = new char[10];
 		for (int i = 0; i < 10; i++) {
@@ -29,9 +29,31 @@ public class TicTacToeGame {
 		System.out.println("----------");
 		System.out.println("|" + board[6] + "|" + board[7] + "|" + board[8] + "|");
 	}
+	//public static void checkMove(char[] board,int index,char userinput) {
+		//if(board[index]==' ') {
+			//board[index]=userinput;
+			//showBoard(board);
+		//}
+		//else
+			//System.out.println("Not Empty");
+	//}
+	public static boolean chooseLocation(char[] board,int index,char userinput) {
+		boolean emptyStatus;
+		if(board[index]==' ') {
+			emptyStatus= true;
+		System.out.println("Index is available");
+		}
+		else {
+			emptyStatus= false;
+		System.out.println("Index is not available");
+		}
+		return emptyStatus;
+	}
+
 	public static void main(String[] args) {
 		char computerLetter;
-		char[] board=createBoard();
+		char[] board = createBoard();
+		Scanner sc = new Scanner(System.in);
 		char userinput = chooseLetter();
 		if (userinput == 'X')
 			computerLetter = 'O';
@@ -39,8 +61,13 @@ public class TicTacToeGame {
 			computerLetter = 'X';
 		createBoard();
 		showBoard(board);
+		boolean emptyStatus;
+			System.out.println("Enter the index from 1 to 9");
+			int index = sc.nextInt();
+			emptyStatus = chooseLocation(board,index, userinput);
 	}
+
 	private static void showBoard(Object board) {
-		
+
 	}
 }
