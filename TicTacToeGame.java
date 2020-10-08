@@ -4,6 +4,8 @@ package com.capgemini.tictac;
 import java.util.Scanner;
 
 public class TicTacToeGame {
+	private static final String User = null;
+	private static final String Computer = null;
 
 	public static char[] createBoard() {
 		char[] board = new char[10];
@@ -29,11 +31,11 @@ public class TicTacToeGame {
 		System.out.println("----------");
 		System.out.println("|" + board[6] + "|" + board[7] + "|" + board[8] + "|");
 	}
-	//usecase5//
+	// usecase5//
 
 	public static void checkMove(char[] board, int index, char userinput) {
-		
-			board[index] = userinput;
+
+		board[index] = userinput;
 	}
 
 	// usecase4//
@@ -43,17 +45,28 @@ public class TicTacToeGame {
 		boolean emptyStatus;
 		do {
 			System.out.println("Enter index to place letter " + userinput);
-	        index = sc.nextInt();
-			if(board[index] == ' ') {
+			index = sc.nextInt();
+			if (board[index] == ' ') {
 				emptyStatus = true;
 				System.out.println("Index available");
-			}
-			else {
+			} else {
 				emptyStatus = false;
 				System.out.println("Index not available");
 			}
-		} while(emptyStatus == false);
+		} while (emptyStatus == false);
 		return index;
+	}
+
+	// usecase6//
+	public static String switchCase() { 
+		String userTurn = " ";
+		int user = (int) Math.floor(Math.random() * 10) % 2;
+		System.out.println("User turn");
+		if (user == 0)
+			userTurn = User;
+		else
+			userTurn = Computer;
+		return userTurn;
 	}
 
 	public static void main(String[] args) {
@@ -67,11 +80,9 @@ public class TicTacToeGame {
 			computerLetter = 'X';
 		createBoard();
 		showBoard(board);
-		int index=isLocationAvailable(board,userinput);
-		checkMove(board,index,userinput);
+		int index = isLocationAvailable(board, userinput);
+		checkMove(board, index, userinput);
 	}
-
-	
 
 	private static void showBoard(Object board) {
 
