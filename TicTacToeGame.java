@@ -333,7 +333,7 @@ public class TicTacToeGame {
 			String output = isWinning(board, userinput);
 			System.out.println("Output is " + output);
 			if (output == "Win")
-				turn = 1;
+				turn = 1;//usecase12//
 			else if (output == "Change") {
 				userinput = swapPlayerLetter(userinput, playerLetter, computerLetter);
 				firstPlayer = swapTurn(firstPlayer);
