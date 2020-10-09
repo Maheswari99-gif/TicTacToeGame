@@ -9,8 +9,8 @@ import java.util.Scanner;
  *
  */
 public class TicTacToeGame {
-	private static final String User = null;
-	private static final String Computer = null;
+	private static final String User = "User";
+	private static final String Computer = "Computer";
 
 	public static char[] createBoard() {
 		char[] board = new char[10];
