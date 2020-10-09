@@ -172,7 +172,8 @@ public class TicTacToeGame {
 		}
 		return computerWinPosition;
 	}
-	//usecase9//
+
+	// usecase9//
 	/**
 	 * 
 	 * @param board
@@ -200,21 +201,27 @@ public class TicTacToeGame {
 		}
 		return positionForPlayerWin;
 	}
-	
-	public static int availableCorner(char[] board)
-	{
+
+	/**
+	 * 
+	 * @param board
+	 * @return
+	 */
+
+	public static int availableCorner(char[] board) {
 		int indexOfCorner = 10;
-		if(board[0]==' ')
+		if (board[0] == ' ')
 			indexOfCorner = 0;
-		else if(board[2]==' ')
+		else if (board[2] == ' ')
 			indexOfCorner = 2;
-		else if(board[6]==' ')
+		else if (board[6] == ' ')
 			indexOfCorner = 6;
-		else if(board[8]==' ')
+		else if (board[8] == ' ')
 			indexOfCorner = 8;
 		return indexOfCorner;
 	}
-	//usecase10//
+
+	// usecase10//
 	/**
 	 * 
 	 * @param board
@@ -224,23 +231,42 @@ public class TicTacToeGame {
 	public static void computerMove(char[] board, int indexC, char computerLetter) {
 		while (true) {
 			if (isLocationAvailable(board, indexC)) {
-				System.out.println("Position is free");
+				System.out.println("Index is free");
 				board[indexC] = computerLetter;
 				showBoard(board);
 				break;
 
 			} else {
-				System.out.println("Position isnt free, enter another position");
+				System.out.println("Index isnt free, enter another index");
 				showBoard(board);
-			    indexC = (int) (Math.floor(Math.random() * 10 % 9));
-				System.out.println("Computer choose "+indexC);
+				indexC = (int) (Math.floor(Math.random() * 10 % 9));
+				System.out.println("Computer choose " + indexC);
 				computerMove(board, indexC, computerLetter);
 				break;
 			}
 
 		}
 	}
-	
+	//usecase11//
+	/**
+	 * 
+	 * @param board
+	 * @return
+	 */
+	public static int availableCentreOrSide(char[] board) {
+		int indexOfSide = 0;
+		if(board[4]==' ')
+			indexOfSide = 4;
+		else if(board[3]==' ')
+			indexOfSide = 3;
+		else if(board[1]==' ')
+			indexOfSide = 1;
+		else if(board[5]==' ')
+			indexOfSide = 5;
+		else if(board[7]==' ')
+			indexOfSide = 7;
+		return indexOfSide;
+	}
 
 	public static void main(String args[]) {
 
@@ -269,6 +295,7 @@ public class TicTacToeGame {
 			int positionComputer = 0;
 			int blockPlayer = 0;
 			int cornerPosition = 0;
+			int centreSidePosition = 0;
 			if (firstPlayer == Computer) {
 				showBoard(board);
 				positionComputer = computerWin(board, userinput);
@@ -282,8 +309,13 @@ public class TicTacToeGame {
 					board[blockPlayer] = userinput;
 					showBoard(board);
 				} else if (cornerPosition != 10) {
-					System.out.println("Computer choose corner position "+cornerPosition);
+					System.out.println("Computer choose corner position " + cornerPosition);
 					board[cornerPosition] = userinput;
+					showBoard(board);
+				} 
+				else if(centreSidePosition != 10) {
+					System.out.println("Computer choose position "+cornerPosition);
+					board[centreSidePosition] = userinput;
 					showBoard(board);
 				}
 				else {
