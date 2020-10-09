@@ -200,6 +200,47 @@ public class TicTacToeGame {
 		}
 		return positionForPlayerWin;
 	}
+	
+	public static int availableCorner(char[] board)
+	{
+		int indexOfCorner = 10;
+		if(board[0]==' ')
+			indexOfCorner = 0;
+		else if(board[2]==' ')
+			indexOfCorner = 2;
+		else if(board[6]==' ')
+			indexOfCorner = 6;
+		else if(board[8]==' ')
+			indexOfCorner = 8;
+		return indexOfCorner;
+	}
+	//usecase10//
+	/**
+	 * 
+	 * @param board
+	 * @param indexC
+	 * @param computerLetter
+	 */
+	public static void computerMove(char[] board, int indexC, char computerLetter) {
+		while (true) {
+			if (isLocationAvailable(board, indexC)) {
+				System.out.println("Position is free");
+				board[indexC] = computerLetter;
+				showBoard(board);
+				break;
+
+			} else {
+				System.out.println("Position isnt free, enter another position");
+				showBoard(board);
+			    indexC = (int) (Math.floor(Math.random() * 10 % 9));
+				System.out.println("Computer choose "+indexC);
+				computerMove(board, indexC, computerLetter);
+				break;
+			}
+
+		}
+	}
+	
 
 	public static void main(String args[]) {
 
@@ -227,6 +268,7 @@ public class TicTacToeGame {
 		do {
 			int positionComputer = 0;
 			int blockPlayer = 0;
+			int cornerPosition = 0;
 			if (firstPlayer == Computer) {
 				showBoard(board);
 				positionComputer = computerWin(board, userinput);
@@ -239,7 +281,12 @@ public class TicTacToeGame {
 					System.out.println("Player will win if " + blockPlayer + " is choosen.  Block that");
 					board[blockPlayer] = userinput;
 					showBoard(board);
-				} else {
+				} else if (cornerPosition != 10) {
+					System.out.println("Computer choose corner position "+cornerPosition);
+					board[cornerPosition] = userinput;
+					showBoard(board);
+				}
+				else {
 					System.out.println("Enter computer position ");
 					int indexC = (int) (Math.floor(Math.random() * 10 % 9));
 					System.out.println("Computer choose position " + indexC);
