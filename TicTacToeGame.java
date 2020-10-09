@@ -267,8 +267,12 @@ public class TicTacToeGame {
 			indexOfSide = 7;
 		return indexOfSide;
 	}
+	//usecase13//
+	/**
+	 * 
+	 */
 
-	public static void main(String args[]) {
+	public static void ticTac() {
 
 		char[] board = createBoard();
 		showBoard(board);
@@ -276,10 +280,10 @@ public class TicTacToeGame {
 		char computerLetter = ' ';
 		if (playerLetter == 'X') {
 			computerLetter = 'O';
-			System.out.println("Players symbol is " + playerLetter + " and Computers lettter is " + computerLetter);
+			System.out.println("Players letter is " + playerLetter + " and Computers lettter is " + computerLetter);
 		} else {
 			computerLetter = 'X';
-			System.out.println("Players symbol is " + playerLetter + " and Computers lettter is " + computerLetter);
+			System.out.println("Players letter is " + playerLetter + " and Computers lettter is " + computerLetter);
 		}
 		String firstPlayer = switchCase();
 		System.out.println("First chance " + firstPlayer);
@@ -305,7 +309,7 @@ public class TicTacToeGame {
 					board[positionComputer] = userinput;
 					showBoard(board);
 				} else if (blockPlayer != 10) {
-					System.out.println("Player will win if " + blockPlayer + " is choosen.  Block that");
+					System.out.println("If " + blockPlayer + " is choosen player will win.So Block that");
 					board[blockPlayer] = userinput;
 					showBoard(board);
 				} else if (cornerPosition != 10) {
@@ -341,6 +345,15 @@ public class TicTacToeGame {
 			} else
 				turn = 1;
 		} while (turn != 1);
+	}
+	public static void main(String args[]) {
+
+		char anotherGame=' ';
+		do {
+			ticTac();
+			System.out.println("Do you want to play again ? (Y / N)");
+			anotherGame = sc.next().charAt(0);
+		}while(anotherGame != 'N');
 	}
 
 }
