@@ -9,8 +9,9 @@ import java.util.Scanner;
  *
  */
 public class TicTacToeGame {
-	private static final String User = null;
-	private static final String Computer = null;
+	private static final String User = "User";
+	private static final String Computer = "Computer";
+	static Scanner sc = new Scanner(System.in);
 
 	public static char[] createBoard() {
 		char[] board = new char[10];
@@ -28,7 +29,6 @@ public class TicTacToeGame {
 
 	public static char chooseLetter() {
 		System.out.println("Enter the Letter:");
-		Scanner sc = new Scanner(System.in);
 		char letter = sc.next().charAt(0);
 		return letter;
 	}
@@ -49,9 +49,24 @@ public class TicTacToeGame {
 	}
 
 	// usecase5//
-	public static void checkMove(char[] board, int index, char playerLetter) {
+	public static void checkMove(char[] board, int index, char userinput) {
 
-		board[index] = playerLetter;
+		while (true) {
+			if (isLocationAvailable(board, index)) {
+				System.out.println("Position is free");
+				board[index] = userinput;
+				showBoard(board);
+				break;
+
+			} else {
+				System.out.println("Position isnt free, enter another position");
+				showBoard(board);
+				index = sc.nextInt();
+				checkMove(board, index, userinput);
+				break;
+			}
+
+		}
 	}
 
 	// usecase4//
@@ -61,22 +76,13 @@ public class TicTacToeGame {
 	 * @param userinput
 	 * @return
 	 */
-	public static int isLocationAvailable(char[] board, char userinput) {
-		Scanner sc = new Scanner(System.in);
-		int index;
-		boolean emptyStatus;
-		do {
-			System.out.println("Enter index to place letter " + userinput);
-			index = sc.nextInt();
-			if (board[index] == ' ') {
-				emptyStatus = true;
-				System.out.println("Index available");
-			} else {
-				emptyStatus = false;
-				System.out.println("Index not available");
-			}
-		} while (emptyStatus == false);
-		return index;
+	public static boolean isLocationAvailable(char[] board, int index) {
+		if (board[index] == ' ')
+			return true;
+
+		else
+			return false;
+
 	}
 
 	// usecase6//
@@ -107,7 +113,7 @@ public class TicTacToeGame {
 		for (int i = 0; i < 10; i++)
 			if (board[i] == ' ')
 				count++;
-		if(count==0)
+		if (count == 0)
 			return "Tie";
 		else if ((board[0] == userinput && board[1] == userinput && board[2] == userinput)
 				|| (board[3] == userinput && board[4] == userinput && board[5] == userinput)
@@ -119,21 +125,20 @@ public class TicTacToeGame {
 				|| (board[2] == userinput && board[4] == userinput && board[6] == userinput))
 
 			return "Win";
-		else 
-			return "change";
-		
+		else
+			return "Change";
 
 	}
 
-	private static char swapPlayerLetter(char userinput) {
-		if (userinput == 'X')
-			userinput = 'O';
+	public static char swapPlayerLetter(char userinput, char playerLetter, char computerLetter) {
+		if (userinput == playerLetter)
+			userinput = computerLetter;
 		else
-			userinput = 'X';
+			userinput = playerLetter;
 		return userinput;
 	}
 
-	private static String swapTurn(String firstPlayer) {
+	public static String swapTurn(String firstPlayer) {
 		if (firstPlayer == User)
 			firstPlayer = Computer;
 		else
@@ -150,11 +155,11 @@ public class TicTacToeGame {
 	 */
 	private static int computerWin(char[] board, char userinput) {
 		String computerWinPossibility;
-		int computerWinPosition = 0;
-        char[] boardCopy=new char[10];
-        for(int i=0;i<10;i++) {
-        	boardCopy[i]=board[i];
-        }
+		int computerWinPosition = 10;
+		char[] boardCopy = new char[10];
+		for (int i = 0; i < 10; i++) {
+			boardCopy[i] = board[i];
+		}
 		for (int i = 0; i < 10; i++) {
 			if (boardCopy[i] == ' ') {
 				boardCopy[i] = userinput;
@@ -167,47 +172,96 @@ public class TicTacToeGame {
 		}
 		return computerWinPosition;
 	}
+	//usecase9//
+	/**
+	 * 
+	 * @param board
+	 * @param userinput
+	 * @param playerLetter
+	 * @param computerLetter
+	 * @return
+	 */
 
-	public static void main(String[] args) {
-		char computerLetter = ' ';
+	public static int computerBlock(char[] board, char userinput, char playerLetter, char computerLetter) {
+		String playerWinPossibility;
+		int positionForPlayerWin = 10;
+		char previousInput = swapPlayerLetter(userinput, playerLetter, computerLetter);
+		for (int i = 0; i < 10; i++) {
+			if (board[i] == ' ') {
+				board[i] = previousInput;
+				playerWinPossibility = isWinning(board, previousInput);
+				if (playerWinPossibility.contains("Win")) {
+					positionForPlayerWin = i;
+					board[i] = ' ';
+					break;
+				}
+				board[i] = ' ';
+			}
+		}
+		return positionForPlayerWin;
+	}
+
+	public static void main(String args[]) {
+
 		char[] board = createBoard();
 		showBoard(board);
-		createBoard();
-		Scanner sc = new Scanner(System.in);
 		char playerLetter = chooseLetter();
-		if (playerLetter == 'X')
+		char computerLetter = ' ';
+		if (playerLetter == 'X') {
 			computerLetter = 'O';
-		else
+			System.out.println("Players symbol is " + playerLetter + " and Computers lettter is " + computerLetter);
+		} else {
 			computerLetter = 'X';
-		String firstChance = switchCase();
-		System.out.println("First chance : " + firstChance);
+			System.out.println("Players symbol is " + playerLetter + " and Computers lettter is " + computerLetter);
+		}
+		String firstPlayer = switchCase();
+		System.out.println("First chance " + firstPlayer);
 		char userinput = ' ';
-		if (firstChance == User)
+		if (firstPlayer == User)
 			userinput = playerLetter;
 		else
 			userinput = computerLetter;
-		System.out.println("Input: " + userinput);
-		String firstPlayer=firstChance;
-		String Status;
-		int computerPosition = 0,index;
-		do {
-			if (firstPlayer == Computer) {
-				computerPosition = computerWin(board, userinput);
-			}
-				if (computerPosition != 0) {
-					index = computerPosition;
-				}
-				 else {
-					index=isLocationAvailable(board,userinput);
-				}
-				checkMove(board, index, userinput);
-			System.out.println("\n Updated Board");
-			showBoard(board);
-			Status=isWinning(board,userinput);
-			userinput=swapPlayerLetter(userinput);
-			firstPlayer=swapTurn(firstPlayer);
-		} while (Status.contains("change"));
 
+		System.out.println("Input taken for firstPlayer is " + userinput);
+		int turn = 0;
+		do {
+			int positionComputer = 0;
+			int blockPlayer = 0;
+			if (firstPlayer == Computer) {
+				showBoard(board);
+				positionComputer = computerWin(board, userinput);
+				blockPlayer = computerBlock(board, userinput, playerLetter, computerLetter);
+				if (positionComputer != 10) {
+					System.out.println("Computer will win if " + positionComputer + " is choosen");
+					board[positionComputer] = userinput;
+					showBoard(board);
+				} else if (blockPlayer != 10) {
+					System.out.println("Player will win if " + blockPlayer + " is choosen.  Block that");
+					board[blockPlayer] = userinput;
+					showBoard(board);
+				} else {
+					System.out.println("Enter computer position ");
+					int indexC = (int) (Math.floor(Math.random() * 10 % 9));
+					System.out.println("Computer choose position " + indexC);
+					checkMove(board, indexC, userinput);
+					showBoard(board);
+				}
+			} else {
+				System.out.println("Enter player position");
+				int index = sc.nextInt();
+				checkMove(board, index, userinput);
+			}
+			String output = isWinning(board, userinput);
+			System.out.println("Output is " + output);
+			if (output == "Win")
+				turn = 1;
+			else if (output == "Change") {
+				userinput = swapPlayerLetter(userinput, playerLetter, computerLetter);
+				firstPlayer = swapTurn(firstPlayer);
+				turn = 0;
+			} else
+				turn = 1;
+		} while (turn != 1);
 	}
-	
+
 }
