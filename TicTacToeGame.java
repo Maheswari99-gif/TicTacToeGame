@@ -150,7 +150,7 @@ public class TicTacToeGame {
 	 */
 	private static int computerWin(char[] board, char userinput) {
 		String computerWinPossibility;
-		int computerWinPosition = 0;
+		int computerWinPosition = 10;
         char[] boardCopy=new char[10];
         for(int i=0;i<10;i++) {
         	boardCopy[i]=board[i];
@@ -194,7 +194,7 @@ public class TicTacToeGame {
 			if (firstPlayer == Computer) {
 				computerPosition = computerWin(board, userinput);
 			}
-				if (computerPosition != 0) {
+				if (computerPosition != 10) {
 					index = computerPosition;
 				}
 				 else {
